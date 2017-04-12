@@ -1,0 +1,28 @@
+{
+  "name": "express-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "lint": "standard",
+    "start": "node index"
+  },
+  "dependencies": {
+    "eccrypto": "^1.0.3",
+    "jsonwebtoken": "^7.3.0",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "next",
+    "koa-logger": "next",
+    "koa-router": "next",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.9.2",
+    "mongoose-auto-increment": "^5.0.1",
+    "mongoose-unique-validator": "^1.0.5",
+    "msgpack5": "^3.4.1",
+    "sjcl": "^1.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "standard": "^9.0.2"
+  }
+}
