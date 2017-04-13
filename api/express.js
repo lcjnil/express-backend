@@ -28,4 +28,10 @@ router.post('/', isStaff, async ctx => {
   ctx.response.status = 200
 })
 
+router.get('/', isStaff, async ctx => {
+  const express = await Express.find().select('id type weight code')
+  ctx.response.body = express
+  ctx.response.status = 200
+})
+
 module.exports = router
