@@ -1,5 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
+const cors = require('kcors')
 
 const logger = require('koa-logger')
 const bodyParser = require('koa-bodyparser')
@@ -11,6 +12,9 @@ const expressApi = require('./api/express')
 
 app.use(logger())
 app.use(bodyParser())
+app.use(cors({
+  exposeHeaders: 'X-Access-Token',
+}))
 
 app.use(async (ctx, next) => {
   try {

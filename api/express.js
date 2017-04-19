@@ -29,9 +29,32 @@ router.post('/', isStaff, async ctx => {
 })
 
 router.get('/', isStaff, async ctx => {
-  const express = await Express.find().select('id type weight code')
+  const express = await Express.find().select('-password')
   ctx.response.body = express
   ctx.response.status = 200
+})
+
+router.get('/:expressId', isLogin, async ctx => {
+  const expressId = ctx.params.expressId
+  const express = await Express.findOne({expressId})
+  if (!express) {
+    ctx.status = 404
+    ctx.body = {}
+    return
+  }
+
+  if (ctx.user && ctx.user.type !== 'user') {
+    ctx.body = _.omit(express.toJSON(), ['password', 'code'])
+    console.log(ctx.body)
+    return
+  }
+
+  if (ctx.user && [express.senderPhone, express.receiverPhone].includes(ctx.user.phone)) {
+    ctx.body = _.omit(express.toJSON(), ['code'])
+    return
+  }
+
+  ctx.body = _.pick(express.toJSON(), ['type', 'weight', 'expressId'])
 })
 
 module.exports = router

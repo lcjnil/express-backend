@@ -7,6 +7,8 @@ const AppError = require('../lib/AppError')
 const {sign} = require('../lib/token')
 const {key} = require('../config')
 
+router.prefix('/api')
+
 /**
  * @api {post} /register 注册新用户
  * @apiName RegisterUser

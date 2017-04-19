@@ -10,6 +10,7 @@
   "dependencies": {
     "eccrypto": "^1.0.3",
     "jsonwebtoken": "^7.3.0",
+    "kcors": "2",
     "koa": "^2.2.0",
     "koa-bodyparser": "next",
     "koa-logger": "next",
