@@ -38,8 +38,8 @@ ExpressSchema.statics.addExpress =
   async function addExpress ({ type, weight, receiverPhone, receiverName, receiverAddress,
                                senderName, senderPhone, senderAddress }) {
     const User = connection.model('User')
-    const sender = await User.findEndUser(senderPhone)
-    const receiver = await User.findEndUser(receiverPhone)
+    const sender = await User.findEndUser(senderPhone, senderName)
+    const receiver = await User.findEndUser(receiverPhone, receiverName)
     const password = genPassword()
     const express = await this.create({
       type, weight, receiverPhone, receiverName, receiverAddress,
