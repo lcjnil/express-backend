@@ -15,6 +15,9 @@ const UserSchema = new Schema({
     type: 'String',
     required: '密码是必填项'
   },
+  name: {
+    type: 'String'
+  },
   type: {
     type: 'String',
     enum: ['user', 'staff', 'admin'],
@@ -29,10 +32,11 @@ UserSchema.statics.addUser = function addUser({phone, password, type = 'user'}) 
   return this.create({phone, password, type})
 }
 
-UserSchema.statics.addNormalUser = function addNormalUser({phone, password}) {
+UserSchema.statics.addNormalUser = function addNormalUser({phone, password, name}) {
   return this.create(Object.assign({
     phone,
     password,
+    name,
     type: 'user',
   }, genKeypair()))
 }

@@ -2,6 +2,7 @@ const Router = require('koa-router')
 const router = new Router()
 const _ = require('lodash')
 
+const AppError = require('../lib/AppError')
 const User = require('../model/user')
 const Express = require('../model/express')
 
@@ -34,9 +35,9 @@ router.get('/', isStaff, async ctx => {
   ctx.response.status = 200
 })
 
-router.get('/:expressId', isLogin, async ctx => {
+router.get('/:expressId', async ctx => {
   const expressId = ctx.params.expressId
-  const express = await Express.findOne({expressId})
+  const express = await Express.findOne({expressId}).deepPopulate('history.operator')
   if (!express) {
     ctx.status = 404
     ctx.body = {}
@@ -45,7 +46,6 @@ router.get('/:expressId', isLogin, async ctx => {
 
   if (ctx.user && ctx.user.type !== 'user') {
     ctx.body = _.omit(express.toJSON(), ['password', 'code'])
-    console.log(ctx.body)
     return
   }
 
@@ -55,6 +55,31 @@ router.get('/:expressId', isLogin, async ctx => {
   }
 
   ctx.body = _.pick(express.toJSON(), ['type', 'weight', 'expressId'])
+})
+
+router.post('/:expressId/history', isStaff, async ctx => {
+  const {expressId} = ctx.params
+  const {position} = ctx.request.body
+
+  const express = await Express.findOne({expressId})
+  if (!express) {
+    throw new AppError(404, '没有找到这个物流记录')
+  }
+
+  await express.addHistory({position, user: ctx.user})
+  ctx.response.status = 200
+})
+
+router.post('/:expressId/receive', isStaff, async ctx => {
+  const {password} = ctx.request.body
+  const {expressId} = ctx.params
+  const express = await Express.findOne({expressId})
+  if (!express) {
+    throw new AppError(404, '没有找到这个物流记录')
+  }
+
+  await express.markReceive({password, user: ctx.user})
+  ctx.response.status = 200
 })
 
 module.exports = router

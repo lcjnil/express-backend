@@ -29,9 +29,9 @@ router.prefix('/api')
 
  */
 router.post('/register', async ctx => {
-  const {phone, password} = ctx.request.body
+  const {phone, password, name} = ctx.request.body
   try {
-    const user = await User.addNormalUser({phone, password})
+    const user = await User.addNormalUser({phone, password, name})
     ctx.response.status = 200
     ctx.response.body = _.pick(user.toJSON(), ['phone', 'privateKey', 'type'])
   } catch (e) {
@@ -48,7 +48,7 @@ router.post('/login', async ctx => {
     const user = await User.findOne({phone, password})
     if (user) {
       ctx.response.status = 200
-      ctx.response.body = _.pick(user.toJSON(), ['phone', 'privateKey', 'type'])
+      ctx.response.body = _.pick(user.toJSON(), ['phone', 'privateKey', 'type', 'name'])
       if (user.type !== 'user') {
         ctx.response.body.privateKey = key.privateKey
       }

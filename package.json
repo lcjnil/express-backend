@@ -18,6 +18,7 @@
     "lodash": "^4.17.4",
     "mongoose": "^4.9.2",
     "mongoose-auto-increment": "^5.0.1",
+    "mongoose-deep-populate": "^3.0.0",
     "mongoose-unique-validator": "^1.0.5",
     "msgpack5": "^3.4.1",
     "sjcl": "^1.0.6"
