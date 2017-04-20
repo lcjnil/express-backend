@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   phone: {
     type: 'string',
     required: '电话是必填项',
-    unique: true,
+    unique: true
   },
   password: {
     type: 'String',
@@ -28,20 +28,20 @@ const UserSchema = new Schema({
 })
 
 // static functions
-UserSchema.statics.addUser = function addUser({phone, password, type = 'user'}) {
+UserSchema.statics.addUser = function addUser ({phone, password, type = 'user'}) {
   return this.create({phone, password, type})
 }
 
-UserSchema.statics.addNormalUser = function addNormalUser({phone, password, name}) {
+UserSchema.statics.addNormalUser = function addNormalUser ({phone, password, name}) {
   return this.create(Object.assign({
     phone,
     password,
     name,
-    type: 'user',
+    type: 'user'
   }, genKeypair()))
 }
 
-UserSchema.statics.findEndUser = async function findEndUser(phone) {
+UserSchema.statics.findEndUser = async function findEndUser (phone) {
   let user = await this.findOne({phone})
   if (!user) {
     user = await this.addNormalUser({

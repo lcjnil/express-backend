@@ -11,7 +11,6 @@ const connection = require('./connection')
 const config = require('../config')
 const {genPassword, encrypt} = require('../lib/Ecc')
 
-
 const ExpressSchema = new Schema({
   type: String,
   weight: String,
@@ -36,10 +35,8 @@ const ExpressSchema = new Schema({
 })
 
 ExpressSchema.statics.addExpress =
-  async function addExpress({
-    type, weight, receiverPhone, receiverName, receiverAddress,
-    senderName, senderPhone, senderAddress
-  }) {
+  async function addExpress ({ type, weight, receiverPhone, receiverName, receiverAddress,
+                               senderName, senderPhone, senderAddress }) {
     const User = connection.model('User')
     const sender = await User.findEndUser(senderPhone)
     const receiver = await User.findEndUser(receiverPhone)
