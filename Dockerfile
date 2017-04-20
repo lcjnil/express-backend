@@ -1,4 +1,4 @@
-FROM kkarczmarczyk/node-yarn:7.2-slim
+FROM kkarczmarczyk/node-yarn:7.6-slim
 
 # Create app directory
 RUN mkdir -p /usr/src/app

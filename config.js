@@ -1,6 +1,8 @@
+const isDebug = process.env.NODE_ENV !== 'production'
+
 module.exports = {
   database: {
-    host: 'localhost',
+    host: isDebug ? 'localhost' : process.env.MONGODB,
     database: 'express',
     port: 27017
   },
