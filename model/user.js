@@ -41,6 +41,15 @@ UserSchema.statics.addNormalUser = function addNormalUser ({phone, password, nam
   }, genKeypair()))
 }
 
+UserSchema.statics.addStaff = function addNormalUser ({phone, password, name}) {
+  return this.create({
+    phone,
+    password,
+    name,
+    type: 'staff'
+  })
+}
+
 UserSchema.statics.findEndUser = async function findEndUser (phone, name) {
   let user = await this.findOne({phone})
   if (!user) {

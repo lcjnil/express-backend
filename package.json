@@ -5,10 +5,13 @@
   "license": "MIT",
   "scripts": {
     "lint": "standard",
-    "start": "node index"
+    "start": "node index",
+    "doc": "apidoc -i api/ -o apidoc/"
   },
   "dependencies": {
+    "apidoc": "^0.17.6",
     "eccrypto": "^1.0.3",
+    "jest": "^20.0.3",
     "jsonwebtoken": "^7.3.0",
     "kcors": "2",
     "koa": "^2.2.0",

@@ -20,25 +20,47 @@ router.prefix('/api')
  * @apiParamExample {json} Request-Example
  *   {
  *      "email": "emlcjnil@gmail.com",
- *      "password": "whatdoesfoxsay"
+ *      "password": "whatdoesfoxsay",
+ *      "name": "lcj"
  *   }
  *
  * @apiSuccessExample Success-Response:
  *    HTTP/1.1 200 OK
  *    {}
-
  */
 router.post('/register', async ctx => {
   const {phone, password, name} = ctx.request.body
   try {
     const user = await User.addNormalUser({phone, password, name})
     ctx.response.status = 200
-    ctx.response.body = _.pick(user.toJSON(), ['phone', 'privateKey', 'type'])
+    ctx.response.body = {}
   } catch (e) {
     throw new AppError(401, e.errors[Object.keys(e.errors)[0]].message)
   }
 })
 
+/**
+ * @api {post} /api/login 登录
+ * @apiName Login
+ * @apiGroup Session
+ *
+ *
+ * @apiParam {String} email Email of the user
+ * @apiParam {String} password Password of the user
+ *   {
+ *      "email": "emlcjnil@gmail.com",
+ *      "password": "whatdoesfoxsay"
+ *   }
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 200 OK
+ *    {
+ *      "phone": "13122221111",
+ *      "type": "user",
+ *      "name": "lcj",
+ *      "privateKey": "wplSK11hyZsDIoPzR4qwwdS5CJsOY57hw9tzGHXUGX0"
+ *    }
+ */
 router.post('/login', async ctx => {
   const {phone, password} = ctx.request.body
   if (!phone || !password) {

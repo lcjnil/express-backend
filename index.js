@@ -7,7 +7,7 @@ const bodyParser = require('koa-bodyparser')
 const AppError = require('./lib/AppError')
 
 const sessionApi = require('./api/session')
-const userApi = require('./api/user')
+const userApi = require('./api/employee')
 const expressApi = require('./api/express')
 
 app.use(logger())
