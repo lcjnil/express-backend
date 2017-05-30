@@ -75,3 +75,20 @@ UserSchema.plugin(autoIncrement.plugin, {
 
 const User = connection.model('User', UserSchema)
 module.exports = User
+
+async function createAdmin() {
+  const admin = await User.findOne({type: 'admin'})
+  if (!admin) {
+    console.log('Admin not found, create default admin')
+    await User.create({
+      type: 'admin',
+      name: 'Admin',
+      phone: '88888',
+      password: 'password'
+    })
+  } else {
+    console.log(`Admin is ${admin.phone}`)
+  }
+}
+
+createAdmin()
